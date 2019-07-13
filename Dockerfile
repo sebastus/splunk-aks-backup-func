@@ -9,6 +9,7 @@ COPY ./scripts /home/scripts
 FROM mcr.microsoft.com/azure-functions/dotnet:2.0
 
 COPY --from=installer-env ["/home/site", "/home/site"]
+COPY --from=installer-env ["/home/scripts", "/home/scripts"]
 
 RUN apt-get update && \
     apt-get install -y curl
