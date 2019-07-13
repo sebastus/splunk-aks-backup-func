@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace splunk_aks_backup_func
 {
-    public static class Function1
+    public static class BackupFunc
     {
         [FunctionName("Function1")]
         public static void Run([TimerTrigger("0 5 * * * *")]TimerInfo myTimer, ILogger log)
