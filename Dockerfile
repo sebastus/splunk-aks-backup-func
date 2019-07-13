@@ -33,3 +33,6 @@ RUN cd ~ && \
 # install Az
 RUN pwsh -Command "& {Install-Module -Name Az -AllowClobber -Force}"
 
+# install git
+RUN apt-get install -y git
+
