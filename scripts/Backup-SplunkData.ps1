@@ -82,7 +82,8 @@ function Backup-SplunkData
     PROCESS
     {
         kubectl -n splunk get pod -l role=splunk_indexer -o json > pods_as.json
-
+        kubectl -n splunk get pvc -o json > pvc_as.json
+        
         $pods = (get-content ./pods_as.json | convertfrom-json)
                 
         foreach ($item in $pods.items)
