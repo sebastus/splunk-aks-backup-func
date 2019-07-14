@@ -1,0 +1,7 @@
+{
+    "time": 0,
+    "source": "MoD-Splunk-Backup",
+    "sourcetype": "txt",
+    "index": "main",
+    "event": ""
+}
