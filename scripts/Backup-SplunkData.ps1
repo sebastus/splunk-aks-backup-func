@@ -83,12 +83,16 @@ function Backup-SplunkData
     {
         kubectl -n splunk get pod -l role=splunk_indexer -o json > pods_as.json
         kubectl -n splunk get pvc -o json > pvc_as.json
-        
+
         $pods = (get-content ./pods_as.json | convertfrom-json)
                 
         foreach ($item in $pods.items)
         {
             $podName = $item.metadata.name
+
+            Write-Verbose "Stopping Splunk in $podName..."
+
+            kubectl -n splunk exec -it $podName sudo bin/splunk stop
 
             Write-Verbose "Looking at $podName disks..."
 
@@ -106,6 +110,11 @@ function Backup-SplunkData
                     Backup-Disk -aks_asset_rg $aks_asset_rg -diskname $diskName
                 }
             }
+
+            Write-Verbose "Starting Splunk in $podName..."
+
+            kubectl -n splunk exec -it $podName sudo bin/splunk start
+            
         }
     }
     END
