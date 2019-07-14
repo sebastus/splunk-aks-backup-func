@@ -56,6 +56,23 @@ function Get-Env
     $var.value
 }
 
+function Log-EventToSplunk
+{
+    param
+    (
+        [Parameter(Mandatory=$true)]
+        [String]$eventText
+    )
+    $jsondata = get-content -path logevent.json
+    $log = $jsondata | ConvertFrom-Json
+
+    $log.time = date +%s
+    $log.event = $eventText
+
+    $response = Invoke-RestMethod -Uri "https://indexer-lb.splunk.svc.cluster.local:8088/services/collector" -Method Post -Body $log -Headers @{"Authorization"="Splunk d62af5ab-c682-4552-88c8-149304288a13"} -UseBasicParsing
+
+}
+
 function Backup-SplunkData
 {
     [CmdletBinding()]

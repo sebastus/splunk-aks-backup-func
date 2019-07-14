@@ -8,6 +8,8 @@ COPY ./scripts /home/scripts
 
 FROM mcr.microsoft.com/azure-functions/dotnet:2.0
 
+RUN echo 'alias ll="ls -la"' >> ~/.bashrc
+
 COPY --from=installer-env ["/home/site", "/home/site"]
 COPY --from=installer-env ["/home/scripts", "/home/scripts"]
 
