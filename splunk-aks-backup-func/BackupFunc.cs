@@ -38,6 +38,7 @@ namespace splunk_aks_backup_func
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
             try
             {
