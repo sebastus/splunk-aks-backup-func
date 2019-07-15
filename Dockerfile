@@ -37,4 +37,5 @@ RUN pwsh -Command "& {Install-Module -Name Az -AllowClobber -Force}"
 
 # install git
 # RUN apt-get install -y git
-
+RUN pwsh -Command "& {Register-PackageSource -Name MyNuGet -Location https://www.nuget.org/api/v2 -ProviderName NuGet}"
+RUN pwsh -Command "& {Install-Package Microsoft.ApplicationInsights -Force}"
