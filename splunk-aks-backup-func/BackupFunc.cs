@@ -31,7 +31,7 @@ namespace splunk_aks_backup_func
 
             var scriptFilePath = getFilename($"scripts/{scriptFileName}");
 
-            log.LogInformation($"C# Timer trigger function executing script {scriptFileName} at: {DateTime.Now}");
+            log.LogInformation($"C# Timer trigger function executing script {scriptFilePath} at: {DateTime.Now}");
 
             ProcessStartInfo startInfo = new ProcessStartInfo(getPowershell());
             startInfo.Arguments = $" -ExecutionPolicy Unrestricted -File {scriptFilePath}";
