@@ -8,13 +8,12 @@ COPY ./scripts /home/scripts
 
 FROM mcr.microsoft.com/azure-functions/dotnet:2.0
 
-RUN echo 'alias ll="ls -la"' >> ~/.bashrc
-
 COPY --from=installer-env ["/home/site", "/home/site"]
 COPY --from=installer-env ["/home/scripts", "/home/scripts"]
 
 RUN apt-get update && \
-    apt-get install -y curl
+    apt-get install -y curl && \
+    echo 'alias ll="ls -la"' >> ~/.bashrc
 
 # install AZ CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
@@ -37,5 +36,5 @@ RUN cd ~ && \
 RUN pwsh -Command "& {Install-Module -Name Az -AllowClobber -Force}"
 
 # install git
-RUN apt-get install -y git
+# RUN apt-get install -y git
 
