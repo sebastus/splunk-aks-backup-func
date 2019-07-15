@@ -33,13 +33,13 @@ namespace splunk_aks_backup_func
 
             try
             {
-                startInfo.EnvironmentVariables.Add("AZURE_TENANT_ID", getEnvironmentVariable("AZURE_TENANT_ID"));
-                startInfo.EnvironmentVariables.Add("AZURE_APP_ID", getEnvironmentVariable("AZURE_APP_ID"));
-                startInfo.EnvironmentVariables.Add("AZURE_APP_KEY", getEnvironmentVariable("AZURE_APP_KEY"));
-                startInfo.EnvironmentVariables.Add("AZURE_SUBSCRIPTION_ID", getEnvironmentVariable("AZURE_SUBSCRIPTION_ID"));
-                startInfo.EnvironmentVariables.Add("AKS_RG", getEnvironmentVariable("AKS_RG"));
-                startInfo.EnvironmentVariables.Add("AKS_ASSET_RG", getEnvironmentVariable("AKS_ASSET_RG"));
-                startInfo.EnvironmentVariables.Add("AKS_NAME", getEnvironmentVariable("AKS_NAME"));
+                startInfo.Environment.Add("AZURE_TENANT_ID", getEnvironmentVariable("AZURE_TENANT_ID"));
+                startInfo.Environment.Add("AZURE_APP_ID", getEnvironmentVariable("AZURE_APP_ID"));
+                startInfo.Environment.Add("AZURE_APP_KEY", getEnvironmentVariable("AZURE_APP_KEY"));
+                startInfo.Environment.Add("AZURE_SUBSCRIPTION_ID", getEnvironmentVariable("AZURE_SUBSCRIPTION_ID"));
+                startInfo.Environment.Add("AKS_RG", getEnvironmentVariable("AKS_RG"));
+                startInfo.Environment.Add("AKS_ASSET_RG", getEnvironmentVariable("AKS_ASSET_RG"));
+                startInfo.Environment.Add("AKS_NAME", getEnvironmentVariable("AKS_NAME"));
             }
             catch (ArgumentNullException argumentNull)
             {
@@ -116,7 +116,7 @@ namespace splunk_aks_backup_func
         {
             var result = System.Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
             if (result == null || result.Length == 0)
-                throw new ArgumentNullException($"Key {name} does not exist in environment variables");
+                throw new ArgumentNullException($"Key {name} does not exist in environment variables or has no value.");
 
             return result;
         }
