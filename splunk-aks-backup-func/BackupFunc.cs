@@ -12,6 +12,14 @@ namespace splunk_aks_backup_func
         [FunctionName("Function1")]
         public static void Run([TimerTrigger("0 * * * * *")]TimerInfo myTimer, ILogger log)
         {
+            var previousExecutionStillRunning = getPreviousExecutions();
+
+            if (previousExecutionStillRunning)
+            {
+                log.LogInformation($"A previous instance of the backup process is still running.");
+                return;
+            }
+
             string scriptFileName = "";
             try
             {
@@ -77,6 +85,17 @@ namespace splunk_aks_backup_func
 
             // process.WaitForExit();
 
+        }
+
+        private static bool getPreviousExecutions()
+        {
+            var processes = Process.GetProcessesByName("powershell");
+
+            if (processes.Length > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static string getFilename(string basename)
