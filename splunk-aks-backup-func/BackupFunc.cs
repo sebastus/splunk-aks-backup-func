@@ -12,8 +12,11 @@ namespace splunk_aks_backup_func
         [FunctionName("Function1")]
         public static void Run([TimerTrigger("0 * * * * *")]TimerInfo myTimer, ILogger log)
         {
-            var scriptFileName = getEnvironmentVariable("SCRIPT_TO_RUN");
-            if (scriptFileName.Length == 0)
+            string scriptFileName = "";
+            try
+            {
+                scriptFileName = getEnvironmentVariable("SCRIPT_TO_RUN");
+            } catch (ArgumentNullException argumentNull)
             {
                 scriptFileName = "Exit-Powershell.ps1";
             }
