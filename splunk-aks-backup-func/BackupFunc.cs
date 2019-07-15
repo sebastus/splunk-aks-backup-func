@@ -36,8 +36,8 @@ namespace splunk_aks_backup_func
             ProcessStartInfo startInfo = new ProcessStartInfo(getPowershell());
             startInfo.Arguments = $" -ExecutionPolicy Unrestricted -File {scriptFilePath}";
             startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardOutput = false;
+            startInfo.RedirectStandardError = false;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
             try
@@ -71,20 +71,6 @@ namespace splunk_aks_backup_func
                 log.LogError($"Problem after external process started: {ex.Message}");
                 throw ex;
             }
-
-            string output = process.StandardOutput.ReadToEnd();
-            if (output.Length > 0)
-            {
-                log.LogInformation($"stdout from powershell script: {output}");
-            }
-
-            string err = process.StandardError.ReadToEnd();
-            if (err.Length > 0)
-            {
-                log.LogInformation($"error output from powershell: {err}");
-            }
-
-            // process.WaitForExit();
 
         }
 
