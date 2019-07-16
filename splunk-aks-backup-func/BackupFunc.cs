@@ -70,6 +70,9 @@ namespace splunk_aks_backup_func
             {
                 log.LogError($"Problem after external process started: {ex.Message}");
                 throw ex;
+            } finally
+            {
+                process.Dispose();
             }
 
         }
